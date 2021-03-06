@@ -1,25 +1,24 @@
 package ip.counter;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
-public class IPCounter {
+public class IPCounterStream {
+
+    private long count = 0;
 
     public long countUnique(String fileName) {
-        long count = 0;
         long start = System.currentTimeMillis();
         Map<String, IPAddress> setIPAddress = createSet();
         if (fileName == null) {
             throw new IllegalArgumentException("File name can't be null!");
         }
-        String line = null;
-        try (BufferedReader reader = new BufferedReader(new FileReader(new File(fileName)))) {
-            while ((line = reader.readLine()) != null) {
-                String[] inputIP = line.split("\\.");
+        try (Stream<String> fileLines = Files.lines(new File(fileName).toPath())) {
+            fileLines.map(line -> line.split("\\.")).forEach(inputIP -> {
                 IPAddress address = setIPAddress.get(inputIP[0]);
                 int firstNumber = Integer.parseInt(inputIP[1]);
                 int secondNumber = Integer.parseInt(inputIP[2]);
@@ -31,11 +30,11 @@ public class IPCounter {
                     address.setSecondNumber(secondNumber);
                     address.setThirdNumber(thirdNumber);
                 }
-            }
+            });
         } catch (RuntimeException e) {
-            throw new IllegalArgumentException(fileName + " containts invalid data format: " + line);
+            throw new IllegalArgumentException(fileName + " containts invalid data format: " + e);
         } catch (IOException e) {
-            throw new NoFileException("File \"" + fileName + "\" not found!");
+            throw new NoFileException("File \"" + fileName + "\" not found!", e);
         }
         long finish = System.currentTimeMillis();
         long analisisTime = (finish - start) / 1000;
