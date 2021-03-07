@@ -21,9 +21,9 @@ public class IPCounter {
             while ((line = reader.readLine()) != null) {
                 String[] inputIP = line.split("\\.");
                 IPAddress address = setIPAddress.get(inputIP[0]);
-                int firstNumber = Integer.parseInt(inputIP[1]);
-                int secondNumber = Integer.parseInt(inputIP[2]);
-                int thirdNumber = Integer.parseInt(inputIP[3]);
+                int firstNumber = parseInt(inputIP[1]);
+                int secondNumber = parseInt(inputIP[2]);
+                int thirdNumber = parseInt(inputIP[3]);
                 if (address.getFirstNumber(firstNumber) != 1 || address.getSecondNumber(secondNumber) != 1
                         || address.getThirdNumber(thirdNumber) != 1) {
                     count++;
@@ -32,7 +32,7 @@ public class IPCounter {
                     address.setThirdNumber(thirdNumber);
                 }
             }
-        } catch (RuntimeException e) {
+        } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
             throw new IllegalArgumentException(fileName + " containts invalid data format: " + line);
         } catch (IOException e) {
             throw new NoFileException("File \"" + fileName + "\" not found!");
@@ -50,5 +50,14 @@ public class IPCounter {
             setIPAddress.put(Integer.toString(i), new IPAddress());
         }
         return setIPAddress;
+    }
+
+    private int parseInt(String line) {
+        int result = 0;
+        for (int i = 0; i < line.length(); i++) {
+            result *= 10;
+            result += line.charAt(i) - 48;
+        }
+        return result;
     }
 }

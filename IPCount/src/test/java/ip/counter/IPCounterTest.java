@@ -1,6 +1,5 @@
 package ip.counter;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -31,7 +30,7 @@ class IPCounterTest {
     
     @Test
     void countUnique_ShouldReturnExpectedResult_WhenInputFileContainsIPAddresses() {
-        long expected = 10;
+        long expected = 10L;
         long actual = counter.countUnique(FILE_IP_ADDRESSES);
         assertEquals(expected, actual);
     }
