@@ -1,27 +1,29 @@
 package ip.counter;
 
+import java.util.concurrent.atomic.AtomicIntegerArray;
+
 public class IPAddress {
     
-    private int[]firstNumber = new int[256];
-    private int[]secondNumber = new int[256];
-    private int[]thirdNumber = new int[256];
+    private AtomicIntegerArray firstNumber = new AtomicIntegerArray(256);
+    private AtomicIntegerArray secondNumber = new AtomicIntegerArray(256);
+    private AtomicIntegerArray thirdNumber = new AtomicIntegerArray(256);
     
     public int getFirstNumber(int index) {
-        return firstNumber[index];
+        return firstNumber.get(index);
     }
     public void setFirstNumber(int index) {
-        this.firstNumber[index] = 1;
+        this.firstNumber.setRelease(index, 1);
     }
     public int getSecondNumber(int index) {
-        return secondNumber[index];
+        return secondNumber.get(index);
     }
     public void setSecondNumber(int index) {
-        this.secondNumber[index] = 1;
+        this.secondNumber.setRelease(index, 1);
     }
     public int getThirdNumber(int index) {
-        return thirdNumber[index];
+        return thirdNumber.get(index);
     }
     public void setThirdNumber(int index) {
-        this.thirdNumber[index] = 1;
+        this.thirdNumber.setRelease(index, 1);
     }
 }

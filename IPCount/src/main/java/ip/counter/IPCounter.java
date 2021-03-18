@@ -21,9 +21,9 @@ public class IPCounter {
             while ((line = reader.readLine()) != null) {
                 String[] inputIP = line.split("\\.");
                 IPAddress address = setIPAddress.get(inputIP[0]);
-                int firstNumber = parseInt(inputIP[1]);
-                int secondNumber = parseInt(inputIP[2]);
-                int thirdNumber = parseInt(inputIP[3]);
+                int firstNumber = Integer.parseInt(inputIP[1]);
+                int secondNumber = Integer.parseInt(inputIP[2]);
+                int thirdNumber = Integer.parseInt(inputIP[3]);
                 if (address.getFirstNumber(firstNumber) != 1 || address.getSecondNumber(secondNumber) != 1
                         || address.getThirdNumber(thirdNumber) != 1) {
                     count++;
@@ -42,7 +42,7 @@ public class IPCounter {
         System.out.println("Counting unique IPv4 addresses in " + fileName + " lasted " + analisisTime / 60
                 + " minutes " + analisisTime % 60 + " seconds!");
         return count;
-    }
+    }   
 
     private Map<String, IPAddress> createSet() {
         Map<String, IPAddress> setIPAddress = new LinkedHashMap<>();
@@ -50,14 +50,5 @@ public class IPCounter {
             setIPAddress.put(Integer.toString(i), new IPAddress());
         }
         return setIPAddress;
-    }
-
-    private int parseInt(String line) {
-        int result = 0;
-        for (int i = 0; i < line.length(); i++) {
-            result *= 10;
-            result += line.charAt(i) - 48;
-        }
-        return result;
     }
 }
