@@ -31,7 +31,7 @@ public class IPCounterStream {
                     address.setThirdNumber(thirdNumber);
                 }
             });
-        } catch (RuntimeException e) {
+        } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
             throw new IllegalArgumentException(fileName + " containts invalid data format: " + e);
         } catch (IOException e) {
             throw new NoFileException("File \"" + fileName + "\" not found!", e);
