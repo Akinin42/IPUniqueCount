@@ -21,21 +21,10 @@ public class IpFileReader {
         if (fileName == null) {
             throw new IllegalArgumentException("Input is null");
         }
-        long start = System.currentTimeMillis();
-        long countLines = 0;
-        int minute = 1;
         String line = null;
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            System.out.println("Started file read!");
             while ((line = reader.readLine()) != null && counter.getCount() < MAX_NUMBER_IP_ADDRESSES) {
-                countLines++;
                 counter.countUniqueIp(converter.convertToLong(line));
-                long time = System.currentTimeMillis();
-                if ((((time - start) / 1000) / minute) == 60) {
-                    minute++;
-                    System.out.println("Reading is " + (minute - 1) + " minutes, readed - " + countLines
-                            + " addresses, it's containts " + counter.getCount() + " unique addresses");
-                }
             }
         } catch (UnknownHostException e) {
             throw new FileException("Data in \"" + fileName + "\" has invalid format!");
@@ -43,5 +32,4 @@ public class IpFileReader {
             throw new FileException("File \"" + fileName + "\" not found!");
         }
     }
-
 }

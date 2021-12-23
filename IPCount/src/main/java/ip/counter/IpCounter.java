@@ -9,12 +9,12 @@ public class IpCounter {
         return count;
     }
 
-    public void countUniqueIp(long ip) {
-        int index = (int) (ip >> 5);
-        int bit = 1 << (ip & 31);
-        if ((depository[index] & bit) == 0) {
+    public void countUniqueIp(long ipLong) {
+        int index = (int) (ipLong >> 5);
+        int value = 1 << (ipLong & 31);
+        if ((depository[index] & value) == 0) {
             count++;
-            depository[index] |= bit;
+            depository[index] |= value;
         }
     }
 }

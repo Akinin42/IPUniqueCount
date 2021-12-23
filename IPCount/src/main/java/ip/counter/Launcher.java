@@ -7,6 +7,6 @@ public class Launcher {
         IpCounter counter = new IpCounter();
         IpFileReader reader = new IpFileReader(converter, counter);
         reader.readFile("D:\\Downloads\\ip_addresses");
-        System.out.println(counter.getCount());
+        System.out.println(String.format("File containts %s unique ip addresses", counter.getCount()));
     }
 }
